@@ -28,8 +28,18 @@ const fs = require('fs');
 // upload file
 const multer = require('multer');
 const path = require('path');
+
+
+// middleware
+const logger = require('morgan');
+app.use(logger('dev'))
+
 // public folder
 app.use('/public', express.static('./public'));
+
+// webiste
+app.use(express.static('public'));
+
 // set the storage engine
 const storage = multer.diskStorage({
   destination: function(req, file, next) {
@@ -302,6 +312,14 @@ app.post('/api/feedback', async function(req, res, next){
 	var result = await feedback.save();
   	res.send(result);	
 });	
+
+
+// catch 404 errors and forward them to error handling middleware
+app.use(function(req, res, next){
+  const err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
 
 // error handling middleware
 app.use(function(err, req, res, next){
