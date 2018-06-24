@@ -298,7 +298,7 @@ app.post('/api/item', async function(req, res, next){
 
 // get new parent
 app.get('/api/item/:parentId', async function(req, res, next){
-	
+	console.log("/api/item/:parentId runing...");
 	var parents = await Item.find({parentId: req.params.parentId})
 	.sort({createdAt: -1}).limit(30);
   	res.send(parents);
@@ -307,6 +307,7 @@ app.get('/api/item/:parentId', async function(req, res, next){
 
 // create new feedback
 app.post('/api/feedback', async function(req, res, next){
+	console.log("/api/feedback runing...");
 	var feedback = Feedback(req.body);
 	feedback._id = mongoose.Types.ObjectId();
 	var result = await feedback.save();
